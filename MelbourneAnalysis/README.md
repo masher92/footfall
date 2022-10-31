@@ -1,12 +1,13 @@
 # Predicting Pedestrian Footfall: <br /> Location Data Analysis of Melbourne, Australia
 
 ## Table of Contents
+* [Downloading data](#downloading-data)
 * [Preparing data](#preparing-data)
 * [Analysing data](#analysing-data)
 * [Modelling](#modelling)
 
-<a name="preparing-data"></a>
-## Preparing data
+<a name="downloading-data"></a>
+## Downloading data
 
 Footfall data is downloaded by selecting 'Export --> CSV' from: 
 * https://data.melbourne.vic.gov.au/Transport/Pedestrian-Counting-System-Monthly-counts-per-hour/b2ak-trbp 
@@ -18,6 +19,8 @@ Data on other features is downloaded from: https://data.melbourne.vic.gov.au/. I
 * [Buildings](https://data.melbourne.vic.gov.au/Property/Buildings-with-name-age-size-accessibility-and-bic/pmhb-s6pn)
 * [Bike share dock locations](https://data.melbourne.vic.gov.au/w/vrwc-rwgm/spy9-nmud?cur=l0YdZo6QE_m&from=88D7wUgzKYw)
 
+<a name="preparing-data"></a>
+## Preparing data
 
 <a name="analysing-data"></a>
 ## Analysing data

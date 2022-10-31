@@ -12,6 +12,8 @@
 Footfall data is downloaded by selecting 'Export --> CSV' from: 
 * https://data.melbourne.vic.gov.au/Transport/Pedestrian-Counting-System-Monthly-counts-per-hour/b2ak-trbp 
 
+Weather data is downloaded from: https://www.timeanddate.com/weather/australia/melbourne/historic. 
+
 Data on other features is downloaded from: https://data.melbourne.vic.gov.au/. Including data on:
 * [Lighting](https://data.melbourne.vic.gov.au/City-Council/Feature-Lighting-including-light-type-wattage-and-/4j42-79hg)
 * [Landmarks](https://data.melbourne.vic.gov.au/People/Landmarks-and-places-of-interest-including-schools/j5vt-ppat)
@@ -21,6 +23,11 @@ Data on other features is downloaded from: https://data.melbourne.vic.gov.au/. I
 
 <a name="preparing-data"></a>
 ## Preparing data
+
+This directory contains:
+* CleaningData-Footfall.ipynb -
+* CleaningData-OtherFeatures.ipynb
+* ScrapingWeatherData.ipynb
 
 <a name="analysing-data"></a>
 ## Analysing data

@@ -21,6 +21,9 @@ Data on other features is downloaded from: https://data.melbourne.vic.gov.au/. I
 * [Buildings](https://data.melbourne.vic.gov.au/Property/Buildings-with-name-age-size-accessibility-and-bic/pmhb-s6pn)
 * [Bike share dock locations](https://data.melbourne.vic.gov.au/w/vrwc-rwgm/spy9-nmud?cur=l0YdZo6QE_m&from=88D7wUgzKYw)
 
+Other possible interesting sources of data to include: social indicators (affluence of area?); tree canopies (green space?; live music venues; Super Sunday bike count;
+Metro Train Stations with Accessibility Information (landmarks only has Railway Station', 'Transport Terminal', 'Marina', 'Bridge' under transport sub-themes - mero stations might feature in transport terminal but would need to check); playgrouns? Cafe, restaurant, bistro seats; Bar, tavern, pub patron capacity; taxi ranks; public toilets; bus stop locations.
+
 <a name="preparing-data"></a>
 ## Preparing data
 

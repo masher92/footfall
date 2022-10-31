@@ -24,9 +24,11 @@ Data on other features is downloaded from: https://data.melbourne.vic.gov.au/. I
 <a name="preparing-data"></a>
 ## Preparing data
 
-This directory contains:
-* CleaningData-Footfall.ipynb -
+This directory contains two scripts which clean and reformat the footfall and feature data, and save cleaned versions to the Cleaned_data directory:
+* CleaningData-Footfall.ipynb 
 * CleaningData-OtherFeatures.ipynb
+
+And one script which scrapes the weather data from the Melbourne historic weather website, cleans the data, and saves yearly weather csvs to the Cleaned_data directory:
 * ScrapingWeatherData.ipynb
 
 <a name="analysing-data"></a>

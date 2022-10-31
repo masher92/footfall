@@ -8,7 +8,8 @@
 <a name="preparing-data"></a>
 ## Preparing data
 
-Footfall data is downloaded from: https://data.melbourne.vic.gov.au/Transport/Pedestrian-Counting-System-Monthly-counts-per-hour/b2ak-trbp by selecting Export --> CSV
+Footfall data is downloaded from: 
+* https://data.melbourne.vic.gov.au/Transport/Pedestrian-Counting-System-Monthly-counts-per-hour/b2ak-trbp by selecting Export --> CSV
 
 Data on other features is downloaded from: https://data.melbourne.vic.gov.au/. Including data on:
 * [Lighting](https://data.melbourne.vic.gov.au/City-Council/Feature-Lighting-including-light-type-wattage-and-/4j42-79hg)

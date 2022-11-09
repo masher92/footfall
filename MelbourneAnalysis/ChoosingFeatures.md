@@ -17,7 +17,9 @@ https://www.melbourne.vic.gov.au/building-and-development/urban-planning/city-wi
 Places for People is a long-term study to explore and document how our city’s urban environment is changing.  
 Since 1993, Places for People has collected information for each decade to produce longitudinal data to monitor use and qualities of urban space.
 Studies in 1993, 2003, 2014.
-Analysed changes by different regions - docklands, Southbank, central city
+### Analysis by area
+Analysed changes by different regions - Docklands, Southbank, central city. Suggests that whilst footfal has been going up in the city centre, that this isn't replicated in other parts (e.g. Docklands and South Bank), although these are area of high density growth. Suggests there is a disconnect between high concentrations of where people live or work, and low concentrations of walkable (essential) land uses.
+
 Gives some analysis of historical pedestrian growth (for 1993-2013). And analyses the consistency of this over days of week snd space:
 e.g. • Sites heaviest in pedestrian volumes were clustered in the central city Retail Core along Swanston Street and Bourke Street, where there are pedestrian friendly street designs adjacent to major public transport nodes and high land use intensity.
 I think all this analysis is based on some actual surveying, rather than just pre-existing datasets.
@@ -29,3 +31,21 @@ also changes the nature of the immediate area, including those streets and lanes
 ### Towers  
 Definition of towers as over 18 storeys. --A comparison of three blocks, one each from the central city, Docklands and Southbank, demonstrates
 compelling evidence that towers generally, and podium towers in particular, lead to a poorer interface between building and public environment
+Also a suggestion of a heigh limmit of 40m in central city. Discussion of how interaction of pedestrians with buildings change when there are towers. 
+The height of towers and their set back from the street diminishes peoples’ sense of connectedness to the street, and passive surveillance of the public realm. 
+
+### Building entrances
+This is mentioned as a determinant of footfall as more building entrances means more land uses to access.
+
+### Population
+Should we use data on population of area?? Further, this could be broken down by demographic data. Using: australian bureau of statistics (abs) census of population and housing.
+Also data on the number of jobs, collected through the City of Melbourne’s Census of Land Use and Employment (CLUE) 
+
+Categories: land uses, urban form, public space and movement (public space, laneways, seats, disrupted footpaths)
+
+
+https://link.springer.com/article/10.1007/s12061-021-09396-1 -- Archetypes of Footfall Context: Quantifying Temporal Variations in Retail Footfall in relation to Micro-Location Characteristics 
+Footfall is determined by a multitude of factors on different spatial and temporal scales, visualised in Fig. 1. Here, these determinants are summarised under three main headings: functional, morphological and other
+
+Does lighting affect pedestrian flows? A pilot study in Lund, Market Harborough and Dublin.  
+

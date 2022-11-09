@@ -20,9 +20,14 @@ Other things mentioned in detail:
 * Number of jobs 
 * Disparity between foot traffic in the day and at night, and notes that the evening closure of arcades both affects the feel of the areas surrounding them and decreases the permeability of the pedestrian network. 
 
-https://link.springer.com/article/10.1007/s12061-021-09396-1 -- Archetypes of Footfall Context: Quantifying Temporal Variations in Retail Footfall in relation to Micro-Location Characteristics 
-Footfall is determined by a multitude of factors on different spatial and temporal scales, visualised in Fig. 1. Here, these determinants are summarised under three main headings: functional, morphological and other. This can pertain to physical characteristics, security, network connectivity and transport connectivity 
-Wwlkability: the attractiveness of a street to a pedestrian. Streets can also have high walkability if they are close to access points for other forms of transport, such as train stations, car parks or bus stops
+## General research into influences on footfall
+
+Footfall is clearly determined by numerous factors on different spatial and temporal scales; however, there has been limited research which has quantified the links between footfall and these factors. Research by Philp et al (2022)<sup>3</sup> does attempt to do this and lists the main determinants of footfall as being:
+* Physical characteristics
+* Security
+* Network connectivity - how the street is situated within a wider network. 
+* Transport connectivity (in particular, walkability, the attractiveness of streets to pedestrians and their accessibility to other forms of transport)
+
 How the street is situated within the wider network has proven to be a reliable indicator of pedestrian counts (Hillier et al., 1993; Raford & Ragland, 2006). In particular, well-connected streets tend to have higher footfall as it is often the shortest route from their origin to their destination. This can be determined by various measures of centrality including closeness and betweenness, which respectfully capture the closeness of a node to other nodes and the prominence of a node as a bridge between other nodes
 Study shows that some key drivers of footfall at a micro-location level: anchor stores, workplace population, density of retail units and distance to transport hubs
 Draws an 100m buffer around sensor (also mentioning that maybe a walkable distance would've made more sense).
@@ -30,10 +35,11 @@ Check also: Table 1 Key features of the functionality and morphology and connect
 Used K means clustering to group the features. 
 This study has produced three distinct clusters of retail micro-locations which vary in terms of their function and morphology: chain and comparison retail micro-locations [CCR], business and independent micro-locations [BI], and value-orientated convenience retail micro-locations [VOCR].
 
-Does lighting affect pedestrian flows? A pilot study in Lund, Market Harborough and Dublin.  
-Analyses differences in footfall before and after the clocks change, and also how the provision of lighting affects this.
 
+Analyses differences in footfall before and after the clocks change, and also how the provision of lighting affects this.<sup>5</sup>
 ### References
 <sup>1</sup> https://www.livingstreets.org.uk/media/3890/pedestrian-pound-2018.pdf)
 <sup>2</sup>https://www.melbourne.vic.gov.au/building-and-development/urban-planning/city-wide-strategies-research/Pages/places-for-people.aspx  
 <sup>3</sup>https://www.melbourne.vic.gov.au/SiteCollectionDocuments/places-for-people-2015.pdf
+<sup>4</sup>https://link.springer.com/article/10.1007/s12061-021-09396-1 -- Archetypes of Footfall Context: Quantifying Temporal Variations in Retail Footfall in relation to Micro-Location Characteristics 
+<sup>5</sup>Does lighting affect pedestrian flows? A pilot study in Lund, Market Harborough and Dublin.  

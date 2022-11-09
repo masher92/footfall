@@ -1,20 +1,9 @@
 ### Melbourne
-Since the 1980s Melbourne has been actively pursuing an agenda to improve public life in the city centre. In the preceding period, the central business distict had been declining as it lost both residents and retail to suburban areas more accessible by car. Part of the efforts to revitalise the city centre has included the Places for People study. The initial study was published in 1994 and surveyed the types of activities occuring the city's public spaces as well as making ten year targets for increasing footfall in the city centre. Subsequent studies in 2004 and 2014 have allowed longer term study of how (and why) the city's urban environment is changing. The results do show that the city has undergone substantial (positive) changes. These include renovations to pavements and street furniture, and the restoration of laneways (narrow alleys/streets). These laneways had become neglected and were increrasingly used solely for rubbish collection, and in 1994 just 8% were accessible and active. However, by 2004 92% had become walkable and often featured new cafes and restaurants. <sup>1</sup>
+Since the 1980s Melbourne has been actively pursuing an agenda to improve public life in the city centre. In the preceding period, the central business distict had been declining as it lost both residents and retail to suburban areas more accessible by car. Part of the efforts to revitalise the city centre has included the Places for People study. The initial study was published in 1994 and surveyed the types of activities occuring the city's public spaces as well as making ten year targets for increasing footfall in the city centre. Subsequent studies in 2004 and 2014 have allowed longer term study of how (and why) the city's urban environment is changing. The results do show that the city has undergone substantial (positive) changes. These include renovations to pavements and street furniture. In the 2015 report it suggests that the highest footfall counts are on streets with pedestrian friendly design (with proximity to public transport nodes and high land use intensity (e.g. lots of different land uses) also mentioned as being of importance).  The importance of the restoration of laneways is also emphasised. These narrow alleys/streets are described as having become neglected and were being increasingly used solely for rubbish collection, with just 8% accessible in 1994. However, by 2004 92% had become walkable and often featured new cafes and restaurants.<sup>1</sup>
+
+The 2015 Places for People study notes that growth in footfall isn't uniform across the city. Whilst it has been rising in the city centre, this hasn't been the case in other parts of the city. The Docklands and South Bank are areas which have experienced high density growth in retail and accommodation, but footfall hasn’t grown concurrently as we might perhaps expect. This study also notes disparity between foot traffic in the day and at night, and notes that the evening closure of arcades both affects the feel of the areas surrounding them and decreases the permeability of the pedestrian network. 
 
 
-https://www.melbourne.vic.gov.au/building-and-development/urban-planning/city-wide-strategies-research/Pages/places-for-people.aspx  
-
-### Analysis by area
-Analysed changes by different regions - Docklands, Southbank, central city. Suggests that whilst footfal has been going up in the city centre, that this isn't replicated in other parts (e.g. Docklands and South Bank), although these are area of high density growth. Suggests there is a disconnect between high concentrations of where people live or work, and low concentrations of walkable (essential) land uses.
-
-Gives some analysis of historical pedestrian growth (for 1993-2013). And analyses the consistency of this over days of week snd space:
-e.g. • Sites heaviest in pedestrian volumes were clustered in the central city Retail Core along Swanston Street and Bourke Street, where there are pedestrian friendly street designs adjacent to major public transport nodes and high land use intensity.
-I think all this analysis is based on some actual surveying, rather than just pre-existing datasets.
-Also lists areas with poor pedestrian network conditions.  
-### Day v night   
-Most laneways are open to the public during the day and night, whereas arcades are generally closed at night.
-This impacts on not only the permeability of the pedestrian network, particularly in the Retail Core (Figs. 26 & 27), but
-also changes the nature of the immediate area, including those streets and lanes that connect with arcades during the daytime
 ### Towers  
 Definition of towers as over 18 storeys. --A comparison of three blocks, one each from the central city, Docklands and Southbank, demonstrates
 compelling evidence that towers generally, and podium towers in particular, lead to a poorer interface between building and public environment
@@ -45,3 +34,4 @@ Analyses differences in footfall before and after the clocks change, and also ho
 
 ### References
 <sup>1</sup> https://www.livingstreets.org.uk/media/3890/pedestrian-pound-2018.pdf)
+<sup>2</sup>https://www.melbourne.vic.gov.au/building-and-development/urban-planning/city-wide-strategies-research/Pages/places-for-people.aspx  

@@ -24,6 +24,8 @@ Data on other features is downloaded from: https://data.melbourne.vic.gov.au/. I
 Other possible interesting sources of data to include: social indicators (affluence of area?); tree canopies (green space?; live music venues; Super Sunday bike count;
 Metro Train Stations with Accessibility Information (landmarks only has Railway Station', 'Transport Terminal', 'Marina', 'Bridge' under transport sub-themes - mero stations might feature in transport terminal but would need to check); playgrouns? Cafe, restaurant, bistro seats; Bar, tavern, pub patron capacity; taxi ranks; public toilets; bus stop locations.
 
+Also - could include data on population of area. This could also be broken down further demographically. Using: australian bureau of statistics (abs) census of population and housing. Also data on the number of jobs, collected through the City of Melbourne’s Census of Land Use and Employment (CLUE) 
+
 <a name="preparing-data"></a>
 ## Preparing data
 

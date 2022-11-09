@@ -20,5 +20,10 @@ Studies in 1993, 2003, 2014.
 Analysed changes by different regions - docklands, Southbank, central city
 Gives some analysis of historical pedestrian growth (for 1993-2013). And analyses the consistency of this over days of week snd space:
 e.g. • Sites heaviest in pedestrian volumes were clustered in the central city Retail Core along Swanston Street and Bourke Street, where there are pedestrian friendly street designs adjacent to major public transport nodes and high land use intensity.
-I think all this analysis is based on some actual surveying, rather than just pre-existing datasets
-
+I think all this analysis is based on some actual surveying, rather than just pre-existing datasets.
+Also lists areas with poor pedestrian network conditions.  
+Day v night --> most laneways are open to the public during the day and night, whereas arcades are generally closed at night.
+This impacts on not only the permeability of the pedestrian network, particularly in the Retail Core (Figs. 26 & 27), but
+also changes the nature of the immediate area, including those streets and lanes that connect with arcades during the daytime
+Definition of towers as over 18 storeys. --A comparison of three blocks, one each from the central city, Docklands and Southbank, demonstrates
+compelling evidence that towers generally, and podium towers in particular, lead to a poorer interface between building and public environment

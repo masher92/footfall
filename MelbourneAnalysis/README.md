@@ -34,6 +34,14 @@ This directory contains two scripts which clean and reformat the footfall and fe
 And one script which scrapes the weather data from the Melbourne historic weather website, cleans the data, and saves yearly weather csvs to the Cleaned_data directory:
 * ScrapingWeatherData.ipynb
 
+The outputs from this are:
+* bikes_clean.csv - columns: station_id, capacity, latitude, longitude
+* buildings_clean.csv - year, n_floors, building_type, access_type, access_rating, latitude, longitude
+* landmarks_clean.csv - theme, subtheme, featurename, latitude, longitude
+* lights_clean.csv - , latitude, longitude
+* street_inf_clean.csv - lamptype_lupvalue, lamp-rating_w, latitude, longitude
+* weather_data_{year}.csv - datetime (hourly), Temp,	Humidity,	Pressure,	Rain, (binary 1 or 0),	WindSpeed
+
 <a name="analysing-data"></a>
 ## Analysing data
 

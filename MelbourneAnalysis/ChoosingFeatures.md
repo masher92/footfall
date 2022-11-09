@@ -1,22 +1,10 @@
-https://www.livingstreets.org.uk/media/3890/pedestrian-pound-2018.pdf
-
-The city of Melbourne renovated its pavements and street furniture and
-turned narrow back alleys into a walkable network that increased
-pedestrian traffic by 40% (Arup, 2015). In 1994 just 8% of the laneways
-were accessible and active but by 2004 92% were walkable and had
-become destinations with new cafes and restaurants (The Urbanist,
-2015). As a result, outdoor cafes have increased from just two in the 1980s
-to over 600 in 2018 (ibid.)
+### Melbourne
+Since the 1980s Melbourne has been actively pursuing an agenda to improve public life in the city centre. In the preceding period, the central business distict had been declining as it lost both residents and retail to suburban areas more accessible by car. Part of the efforts to revitalise the city centre has included the Places for People study. The initial study was published in 1994 and surveyed the types of activities occuring the city's public spaces as well as making ten year targets for increasing footfall in the city centre. Subsequent studies in 2004 and 2014 have allowed longer term study of how (and why) the city's urban environment is changing. The results do show that the city has undergone substantial (positive) changes. These include renovations to pavements and street furniture, and the restoration of laneways (narrow alleys/streets). These laneways had become neglected and were increrasingly used solely for rubbish collection, and in 1994 just 8% were accessible and active. However, by 2004 92% had become walkable and often featured new cafes and restaurants (  https://www.livingstreets.org.uk/media/3890/pedestrian-pound-2018.pdf)
 
 
-https://www.theurbanist.org/2015/09/16/melbourne-a-case-study-in-the-revitalization-of-city-laneways-part-1/  
-https://www.theurbanist.org/2015/09/17/melbourne-a-case-study-in-the-revitalization-of-city-laneways-part-2/  
-From the 1970s, Melbourne’s Central Business District (downtown area) was in decline, as it began losing residents and retail to the appeal of the suburbs — offering convenient access by car. A homogenous business center, empty beyond the working day, the vibrancy of the center was threatened. The city’s celebrated Victorian streetscape character was undermined by encroaching freeways serving commuters, the demolition of heritage buildings, and new developments in breach of height restrictions. Contemporary buildings dominated city blocks, eroding the laneways, which had become neglected spaces used for little more than garbage disposal.
 
 https://www.melbourne.vic.gov.au/building-and-development/urban-planning/city-wide-strategies-research/Pages/places-for-people.aspx  
-Places for People is a long-term study to explore and document how our city’s urban environment is changing.  
-Since 1993, Places for People has collected information for each decade to produce longitudinal data to monitor use and qualities of urban space.
-Studies in 1993, 2003, 2014.
+
 ### Analysis by area
 Analysed changes by different regions - Docklands, Southbank, central city. Suggests that whilst footfal has been going up in the city centre, that this isn't replicated in other parts (e.g. Docklands and South Bank), although these are area of high density growth. Suggests there is a disconnect between high concentrations of where people live or work, and low concentrations of walkable (essential) land uses.
 

@@ -31,16 +31,23 @@ This directory contains two scripts which clean and reformat the footfall and fe
 * CleaningData-Footfall.ipynb 
 * CleaningData-OtherFeatures.ipynb
 
-And one script which scrapes the weather data from the Melbourne historic weather website, cleans the data, and saves yearly weather csvs to the Cleaned_data directory:
+One script which scrapes the weather data from the Melbourne historic weather website, cleans the data, and saves yearly weather csvs to the Cleaned_data directory:
 * ScrapingWeatherData.ipynb
+
+And one script which finds the number of features of each type, and the number of features of each subtype, in a radius of each sensor 
+* FindFeaturesInProximityToSensors.ipynb 
 
 The outputs from this are:
 * bikes_clean.csv - columns: station_id, capacity, latitude, longitude
-* buildings_clean.csv - year, n_floors, building_type, access_type, access_rating, latitude, longitude
-* landmarks_clean.csv - theme, subtheme, featurename, latitude, longitude
-* lights_clean.csv - , latitude, longitude
-* street_inf_clean.csv - lamptype_lupvalue, lamp-rating_w, latitude, longitude
+* buildings_clean.csv - columns: year, n_floors, building_type, access_type, access_rating, latitude, longitude
+* landmarks_clean.csv - columns: theme, subtheme, featurename, latitude, longitude
+* lights_clean.csv - columns : lamptype_lupvalue, lamp-rating_w, latitude, longitude
+* street_inf_clean.csv - feature, condition_rating, latitude, longitude
 * weather_data_{year}.csv - datetime (hourly), Temp,	Humidity,	Pressure,	Rain, (binary 1 or 0),	WindSpeed
+
+And:
+* num_features_near_sensors_100.csv - each column contains data for one sensor, rows specify the feeature types 
+* feature_subtypes_near_sensors_100.csv - each column contains data for one sensor, rows specify the feeature subtypes
 
 <a name="analysing-data"></a>
 ## Analysing data

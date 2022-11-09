@@ -43,9 +43,16 @@ Also data on the number of jobs, collected through the City of Melbourne’s Cen
 
 Categories: land uses, urban form, public space and movement (public space, laneways, seats, disrupted footpaths)
 
-
 https://link.springer.com/article/10.1007/s12061-021-09396-1 -- Archetypes of Footfall Context: Quantifying Temporal Variations in Retail Footfall in relation to Micro-Location Characteristics 
-Footfall is determined by a multitude of factors on different spatial and temporal scales, visualised in Fig. 1. Here, these determinants are summarised under three main headings: functional, morphological and other
+Footfall is determined by a multitude of factors on different spatial and temporal scales, visualised in Fig. 1. Here, these determinants are summarised under three main headings: functional, morphological and other. This can pertain to physical characteristics, security, network connectivity and transport connectivity 
+Wwlkability: the attractiveness of a street to a pedestrian. Streets can also have high walkability if they are close to access points for other forms of transport, such as train stations, car parks or bus stops
+How the street is situated within the wider network has proven to be a reliable indicator of pedestrian counts (Hillier et al., 1993; Raford & Ragland, 2006). In particular, well-connected streets tend to have higher footfall as it is often the shortest route from their origin to their destination. This can be determined by various measures of centrality including closeness and betweenness, which respectfully capture the closeness of a node to other nodes and the prominence of a node as a bridge between other nodes
+Study shows that some key drivers of footfall at a micro-location level: anchor stores, workplace population, density of retail units and distance to transport hubs
+Draws an 100m buffer around sensor (also mentioning that maybe a walkable distance would've made more sense).
+Check also: Table 1 Key features of the functionality and morphology and connectivity variables used as micro-location footfall descriptors
+Used K means clustering to group the features. 
+This study has produced three distinct clusters of retail micro-locations which vary in terms of their function and morphology: chain and comparison retail micro-locations [CCR], business and independent micro-locations [BI], and value-orientated convenience retail micro-locations [VOCR].
 
 Does lighting affect pedestrian flows? A pilot study in Lund, Market Harborough and Dublin.  
+Analyses differences in footfall before and after the clocks change, and also how the provision of lighting affects this.
 

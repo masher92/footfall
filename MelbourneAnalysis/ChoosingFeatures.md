@@ -28,11 +28,11 @@ Footfall is clearly determined by numerous factors on different spatial and temp
 * Network connectivity - how the street is situated within a wider network has proven to be a reliable indicator of pedestrian counts (Hillier et al., 1993; Raford & Ragland, 2006). Well-connected streets which provide lots of people with the shortest route from their origin to destination tend to have higher footfall. This can be measured by closeness and betweenness. 
 * Transport connectivity (in particular, walkability, the attractiveness of streets to pedestrians and their accessibility to other forms of transport)
 
-Check also: Table 1 Key features of the functionality and morphology and connectivity variables used as micro-location footfall descriptors
-Functionality
-
-| Functionality | Distance to the nearest anchor store | Euclidean distance (metres) to nearest anchor store, identified by their brand name (e.g. John Lewis, Primark, Debenhams, full list in Appendix C) |
+This research specifically uses a range of variables to classify the location of footfall sensors on the basis of their surroundings (chain and comparison retail micro-locations, business and independent micro-locations and value-orientated convenience retail micro-locations). The variables they use in this classification are:
+ 
+|Category|Variable|Specification|
 |---|---|---|
+| Functionality | Distance to the nearest anchor store | Euclidean distance (metres) to nearest anchor store, identified by their brand name (e.g. John Lewis, Primark, Debenhams, full list in Appendix C) |
 |  | Distance to the nearest premium store | Euclidean distance (metres) to the nearest premium store, identified by their brand names (e.g. The White Company, Burberry, full list in Appendix C) |
 |  | Distance to the nearest entertainment activity | Euclidean distance (metres) to the nearest venue which offers an entertainment activity (e.g. Cinemas, Arcades, Museums). These were identified using the LDC (2017) survey sub-categorisation (full specification in Appendix C) |
 |  | Proportion of vacant stores (vacancy rate) | The proportion of vacant store identified using the LDC (2017) survey within a 100 m straight line buffer of the sensor |

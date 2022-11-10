@@ -23,17 +23,33 @@ Other things mentioned in detail:
 ## General research into influences on footfall
 
 Footfall is clearly determined by numerous factors on different spatial and temporal scales; however, there has been limited research which has quantified the links between footfall and these factors. Research by Philp et al (2022)<sup>3</sup> does attempt to do this and lists the main determinants of footfall as being:
-* Physical characteristics
+* Physical characteristics (density of retail units, presence of anchor stores, workplace population)
 * Security
-* Network connectivity - how the street is situated within a wider network. 
+* Network connectivity - how the street is situated within a wider network has proven to be a reliable indicator of pedestrian counts (Hillier et al., 1993; Raford & Ragland, 2006). Well-connected streets which provide lots of people with the shortest route from their origin to destination tend to have higher footfall. This can be measured by closeness and betweenness. 
 * Transport connectivity (in particular, walkability, the attractiveness of streets to pedestrians and their accessibility to other forms of transport)
 
-How the street is situated within the wider network has proven to be a reliable indicator of pedestrian counts (Hillier et al., 1993; Raford & Ragland, 2006). In particular, well-connected streets tend to have higher footfall as it is often the shortest route from their origin to their destination. This can be determined by various measures of centrality including closeness and betweenness, which respectfully capture the closeness of a node to other nodes and the prominence of a node as a bridge between other nodes
-Study shows that some key drivers of footfall at a micro-location level: anchor stores, workplace population, density of retail units and distance to transport hubs
-Draws an 100m buffer around sensor (also mentioning that maybe a walkable distance would've made more sense).
 Check also: Table 1 Key features of the functionality and morphology and connectivity variables used as micro-location footfall descriptors
-Used K means clustering to group the features. 
-This study has produced three distinct clusters of retail micro-locations which vary in terms of their function and morphology: chain and comparison retail micro-locations [CCR], business and independent micro-locations [BI], and value-orientated convenience retail micro-locations [VOCR].
+
+| Functionality | Distance to the nearest anchor store | Euclidean distance (metres) to nearest anchor store, identified by their brand name (e.g. John Lewis, Primark, Debenhams, full list in Appendix C) |  |  |  |  |  |  |
+|---|---|---|---|---|---|---|---|---|
+|  | Distance to the nearest premium store | Euclidean distance (metres) to the nearest premium store, identified by their brand names (e.g. The White Company, Burberry, full list in Appendix C) |  |  |  |  |  |  |
+|  | Distance to the nearest entertainment activity | Euclidean distance (metres) to the nearest venue which offers an entertainment activity (e.g. Cinemas, Arcades, Museums). These were identified using the LDC (2017) survey sub-categorisation (full specification in Appendix C) |  |  |  |  |  |  |
+|  | Proportion of vacant stores (vacancy rate) | The proportion of vacant store identified using the LDC (2017) survey within a 100 m straight line buffer of the sensor |  |  |  |  |  |  |
+|  | Proportion of value stores | The proportion of stores identified as value stores by their brand name (e.g. Aldi, Home Bargains, full list in Appendix C) within a 100 m straight line buffer of the sensor |  |  |  |  |  |  |
+|  | Proportion of independent stores | The proportion of stores identified as independent by the singular instance of their store name in the dataset within a 100 m straight line buffer of the sensor |  |  |  |  |  |  |
+|  | Proportion of night-time economy locations | The proportion of locations within a 100 m straight line buffer of the sensors which offer a typical evening appeal (e.g. bars, clubs, restaurants, fast food) identified using LDC (2017) survey categorisation (full specification in Appendix C) |  |  |  |  |  |  |
+|  | Workplace population | The average of the daytime population densities of the workplace zone in which the sensor falls into, and those which border it (ONS, 2017) |  |  |  |  |  |  |
+|  | Ratio of service to retail | The ratio of the locations within a 100 m straight line buffer of the sensor which are identified as service locations by LDC (2017) survey classifications to those identified as comparison retail and food retail (e.g. grocery stores, butchers, confectioners, further specifics in Appendix A) |  |  |  |  |  |  |
+| Morphology and Connectivity | Distance to the nearest transport hub | Euclidean distance (metres) to the nearest group of bus stops or train station as identified in the NaPTAN dataset (Department for Transport, 2014) |  |  |  |  |  |  |
+|  | Distance to the nearest car park | Euclidean distance (metres) to the nearest car park as identified by the Department for Transport (2015) |  |  |  |  |  |  |
+|  | Density of stores | The number of store units within a 100 m straight line buffer of the sensor | Hourly | 2010-present | Yes (from API,   but haven't been able to) Also a dashboard displaying data | No | https://developer.glasgow.gov.uk/api-details#api=mobility&operation=footfall |  |
+|  | Centrality of the street | The street centrality measure was calculated from networks generated by the OSMnx python library. OSMnx uses data from Open Street Map to generate a network graph of a road structure within a boundary. The CDRC retail centre boundaries (Pavlis et al., 2017) were used to generate the pedestrian network around a sensor. The edge betweenness centrality of the street which the sensor was on was is then calculated to give the street centrality measure. Edge betweenness was chosen as the centrality measure because it can be applied to streets instead of intersections, where most of the footfall measurements are taken from. This captures the prominence of a street as a pass-through route | 15/30 mins | October 2021-present | Yes (from API, but haven't   worked it out) | No | https://developer.glasgow.gov.uk/api-details#api=cctv&operation=get-get-detection-summaries |  |
+| San Diego | Automated   counters | 54 counters at 37   sites (some collect walking, some cycling, some both) | Daily (although   data is collected every 15 minutes) | 2012 - present | No (dashboard,   but can't download) | No | https://data.eco-counter.com/public2/?id=100013755 |  |
+| Bath | Cameras | 10 | Hourly | 1st March   2017-20th May 2019 | No (Bath BID   produce weekly summaries of data, but can't see any way to access the raw   data) | No | No | Develop predictive footfall   model using 4 different approaches - XGBoost, LSTM (form of neural network),   SARIMAX and Facebook prophet. XGBoost was the most accurate.   http://london.gisruk.org/gisruk2020_proceedings/GISRUK2020_paper_49.pdf |
+|  | O2   mobile network sensor | N/A | Not sure | 25th January 2019 - 22nd March   2020 | No (data from Movement   Strategies - this was from MSc project and presumably acquired for this) | No | N/A | Developed   predictive footfall model and explores relationship between events and   demographic composition (tried LSTM and XGBoost machine learning models:   https://tinyurl.com/5n7bx4sm / https://tinyurl.com/vh7d6dh9 |
+| Helsinki | Sensors   detecting anonymous bluetooth signals from devices such as mobile phones. | N/A |   |   | No | No |   | Helsinki heat   map: https://www.heatmap.fi/helsinki/ |
+
+
 
 
 Analyses differences in footfall before and after the clocks change, and also how the provision of lighting affects this.<sup>5</sup>

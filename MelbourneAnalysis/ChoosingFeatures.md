@@ -20,20 +20,37 @@ Other things mentioned in detail:
 * Number of jobs 
 * Disparity between foot traffic in the day and at night, and notes that the evening closure of arcades both affects the feel of the areas surrounding them and decreases the permeability of the pedestrian network. 
 
-https://link.springer.com/article/10.1007/s12061-021-09396-1 -- Archetypes of Footfall Context: Quantifying Temporal Variations in Retail Footfall in relation to Micro-Location Characteristics 
-Footfall is determined by a multitude of factors on different spatial and temporal scales, visualised in Fig. 1. Here, these determinants are summarised under three main headings: functional, morphological and other. This can pertain to physical characteristics, security, network connectivity and transport connectivity 
-Wwlkability: the attractiveness of a street to a pedestrian. Streets can also have high walkability if they are close to access points for other forms of transport, such as train stations, car parks or bus stops
-How the street is situated within the wider network has proven to be a reliable indicator of pedestrian counts (Hillier et al., 1993; Raford & Ragland, 2006). In particular, well-connected streets tend to have higher footfall as it is often the shortest route from their origin to their destination. This can be determined by various measures of centrality including closeness and betweenness, which respectfully capture the closeness of a node to other nodes and the prominence of a node as a bridge between other nodes
-Study shows that some key drivers of footfall at a micro-location level: anchor stores, workplace population, density of retail units and distance to transport hubs
-Draws an 100m buffer around sensor (also mentioning that maybe a walkable distance would've made more sense).
-Check also: Table 1 Key features of the functionality and morphology and connectivity variables used as micro-location footfall descriptors
-Used K means clustering to group the features. 
-This study has produced three distinct clusters of retail micro-locations which vary in terms of their function and morphology: chain and comparison retail micro-locations [CCR], business and independent micro-locations [BI], and value-orientated convenience retail micro-locations [VOCR].
+## General research into influences on footfall
 
-Does lighting affect pedestrian flows? A pilot study in Lund, Market Harborough and Dublin.  
-Analyses differences in footfall before and after the clocks change, and also how the provision of lighting affects this.
+Footfall is clearly determined by numerous factors on different spatial and temporal scales; however, there has been limited research which has quantified the links between footfall and these factors. Research by Philp et al (2022)<sup>3</sup> does attempt to do this and lists the main determinants of footfall as being:
+* Physical characteristics (density of retail units, presence of anchor stores, workplace population)
+* Security
+* Network connectivity - how the street is situated within a wider network has proven to be a reliable indicator of pedestrian counts (Hillier et al., 1993; Raford & Ragland, 2006). Well-connected streets which provide lots of people with the shortest route from their origin to destination tend to have higher footfall. This can be measured by closeness and betweenness. 
+* Transport connectivity (in particular, walkability, the attractiveness of streets to pedestrians and their accessibility to other forms of transport)
 
+This research specifically uses a range of variables to classify the location of footfall sensors on the basis of their surroundings (chain and comparison retail micro-locations, business and independent micro-locations and value-orientated convenience retail micro-locations). The variables they use in this classification are:
+ 
+|Category|Variable|Specification|
+|---|---|---|
+| Functionality | Distance to the nearest anchor store | Euclidean distance (metres) to nearest anchor store, identified by their brand name (e.g. John Lewis, Primark, Debenhams, full list in Appendix C) |
+|  | Distance to the nearest premium store | Euclidean distance (metres) to the nearest premium store, identified by their brand names (e.g. The White Company, Burberry, full list in Appendix C) |
+|  | Distance to the nearest entertainment activity | Euclidean distance (metres) to the nearest venue which offers an entertainment activity (e.g. Cinemas, Arcades, Museums). These were identified using the LDC (2017) survey sub-categorisation (full specification in Appendix C) |
+|  | Proportion of vacant stores (vacancy rate) | The proportion of vacant store identified using the LDC (2017) survey within a 100 m straight line buffer of the sensor |
+|  | Proportion of value stores | The proportion of stores identified as value stores by their brand name (e.g. Aldi, Home Bargains, full list in Appendix C) within a 100 m straight line buffer of the sensor |
+|  | Proportion of independent stores | The proportion of stores identified as independent by the singular instance of their store name in the dataset within a 100 m straight line buffer of the sensor |
+|  | Proportion of night-time economy locations | The proportion of locations within a 100 m straight line buffer of the sensors which offer a typical evening appeal (e.g. bars, clubs, restaurants, fast food) identified using LDC (2017) survey categorisation (full specification in Appendix C) |
+|  | Workplace population | The average of the daytime population densities of the workplace zone in which the sensor falls into, and those which border it (ONS, 2017) |
+|  | Ratio of service to retail | The ratio of the locations within a 100 m straight line buffer of the sensor which are identified as service locations by LDC (2017) survey classifications to those identified as comparison retail and food retail (e.g. grocery stores, butchers, confectioners, further specifics in Appendix A) |
+| Morphology and Connectivity | Distance to the nearest transport hub | Euclidean distance (metres) to the nearest group of bus stops or train station as identified in the NaPTAN dataset (Department for Transport, 2014) |
+|  | Distance to the nearest car park | Euclidean distance (metres) to the nearest car park as identified by the Department for Transport (2015) |
+|  | Density of stores | The number of store units within a 100 m straight line buffer of the sensor |
+|  | Centrality of the street | The street centrality measure was calculated from networks generated by the OSMnx python library. OSMnx uses data from Open Street Map to generate a network graph of a road structure within a boundary. The CDRC retail centre boundaries (Pavlis et al., 2017) were used to generate the pedestrian network around a sensor. The edge betweenness centrality of the street which the sensor was on was is then calculated to give the street centrality measure. Edge betweenness was chosen as the centrality measure because it can be applied to streets instead of intersections, where most of the footfall measurements are taken from. This captures the prominence of a street as a pass-through route |
+
+
+Analyses differences in footfall before and after the clocks change, and also how the provision of lighting affects this.<sup>5</sup>
 ### References
 <sup>1</sup> https://www.livingstreets.org.uk/media/3890/pedestrian-pound-2018.pdf)
 <sup>2</sup>https://www.melbourne.vic.gov.au/building-and-development/urban-planning/city-wide-strategies-research/Pages/places-for-people.aspx  
 <sup>3</sup>https://www.melbourne.vic.gov.au/SiteCollectionDocuments/places-for-people-2015.pdf
+<sup>4</sup>https://link.springer.com/article/10.1007/s12061-021-09396-1 -- Archetypes of Footfall Context: Quantifying Temporal Variations in Retail Footfall in relation to Micro-Location Characteristics 
+<sup>5</sup>Does lighting affect pedestrian flows? A pilot study in Lund, Market Harborough and Dublin.  

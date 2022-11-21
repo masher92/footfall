@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "footfall"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+scipy = "^1.9.3"
+numpy = "^1.23.5"
+pandas = "^1.5.1"
+geopandas = "^0.12.1"
+contextily = "^1.2.0"
+osmnx = "^1.2.2"
+momepy = "^0.5.4"
+matplotlib = "^3.6.2"
+jupyterlab = "^3.5.0"
+ipykernel = "^6.17.1"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

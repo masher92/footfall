@@ -11,14 +11,17 @@ Regridding/ReadMe.pdf
 *desktop.ini
 /Notes/*
 *.xlsx
-<<<<<<< HEAD
 *.csv
-=======
->>>>>>> 071d2a2d658f1db4a2253b3b2027f72c874f1d66
 *.ipynb_checkpoints*
 .ipynb_checkpoints
 **/*.ipynb_checkpoints/
 **/**/*.ipynb_checkpoints/
+
+# Mac crap
+.DS_Store
+
+# Vim swap files
+*.swp
 
 .*  # ignore all hidden files and folders
 !/.gitignore  # explicitly do not ignore .gitignore

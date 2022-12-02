@@ -1,5 +1,25 @@
 import pandas as pd
 import numpy as np
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+
+def run_model(x):
+    name, model_type = x # Unpack the tuple
+    # See how long it takes to run this model
+    start = thetime.time()
+    # Use a pipeline to first scale the inputs (especially the weather)
+    model = Pipeline (
+        [ ('standardize', MinMaxScaler(feature_range = (0,1))), 
+         (name, model_type())]
+    )
+    # Evaluate the pipeline (run the model)
+    kfold = KFold(n_splits=10, random_state=7, shuffle = True)
+    mse = cross_val_score(model, X_train, Y_train, cv=kfold, scoring = 'neg_mean_squared_error')
+    r2 = cross_val_score(model, X_train, Y_train, cv=kfold, scoring = 'r2')
+    
+    # See how long it took (in seconds)
+    runtime = int(thetime.time() - start)
+    # Return the results, taking the median of the errors
+    return (name, model, r2, np.median(r2), mse, np.median(mse), runtime)
 
 def select_buildings (row):
     # Add the correct buildings data according to year
@@ -44,16 +64,16 @@ def remove_outliers(sensors):
     outliers_list = list(outliers['datetime']) # A list of the days that are outliers
 
     # Now remove all outliers from the original data
-    df = sensors.loc[~sensors.index.isin(outliers.index)]
-    df = df.reset_index(drop = True)
+    sensors_without_outliers = sensors.loc[~sensors.index.isin(outliers.index)]
+    sensors_without_outliers = sensors_without_outliers.reset_index(drop = True)
 
     # Check that the lengths all make sense
-    assert(len(df) == len(sensors)-len(outliers_list))
+    assert(len(sensors_without_outliers) == len(sensors)-len(outliers_list))
 
     print("I found {} outliers from {} days in total. Removing them leaves us with {} events".format(\
-        len(outliers_list), len(join), len(df) ) )
+        len(outliers_list), len(join), len(sensors_without_outliers) ) )
 
-    return df
+    return sensors_without_outliers
 
 def convert_df_variables_to_dummy(df, variables):
     for variable in variables:
@@ -76,6 +96,56 @@ def join_features_to_sensors (features_df, sensors):
     # Set datetime to proper datetime
     sensors_with_features['datetime'] = pd.to_datetime(sensors_with_features['datetime'])
     return sensors_with_features
+
+def perform_linear_regression(df):
+    
+    # The predictor variables
+    Xfull = df.drop(['hourly_counts'], axis =1)
+
+    # The variable to be predicted
+    Yfull = df['hourly_counts'].values
+
+    # Split data into training and test sets
+    X_train, X_test, Y_train, Y_test = \
+    train_test_split(Xfull, Yfull, test_size=0.6666, random_state=123)
+    
+    #### Standardize both training and testing data
+    scaler = StandardScaler()
+    X_train = pd.DataFrame(scaler.fit_transform(X_train), columns=X_train.columns)
+    X_test = pd.DataFrame(scaler.transform(X_test), columns=X_test.columns)
+
+    #### Fit model
+    model = LinearRegression()
+    model.fit(X_train, Y_train)
+
+    ### Print results
+    print('Training score: ', model.score(X_train, Y_train))
+    print('Test score: ', model.score(X_test, Y_test))
+    print('CV score: ', (cross_val_score(model, X_train, Y_train)).mean())
+
+    # Make predictions on the testing data
+    predictions = model.predict(X_test)
+    residuals = pd.DataFrame({'Predictions':predictions,'RealValues': Y_test})
+    residuals['residuals'] = residuals.RealValues - residuals.Predictions
+    
+    # Not sure what this does
+    (mean_squared_error(Y_test, predictions))**0.5
+
+    # Collect the model coefficients in a dataframe
+    df_coef = pd.DataFrame(model.coef_, index=X_train.columns,
+                           columns=['coefficients'])
+    # calculate the absolute values of the coefficients to gauge influence (show importance of predictor variables)
+    df_coef['coef_abs'] = df_coef.coefficients.abs()
+
+    # Plot the magnitude of the coefficients and... 
+#     fig, axs = plt.subplots(nrows=1, ncols=2, figsize = (16,5))
+#     axs[0].scatter(residuals['Predictions'], Y_test, s=30, c='r', marker='+', zorder=10)
+#     axs[0].plot([Y_test.min(), Y_test.max()], [Y_test.min(), Y_test.max()], c='k', lw=2)
+#     axs[0].set_xlabel("Predicted Values - $\hat{y}$")
+#     axs[0].set_ylabel("Actual Values MEDV - y")
+#     df_coef['coefficients'].sort_values(ascending = False)[:30].plot(kind='barh', ax= axs[1]);
+    
+    return df_coef, residuals
 
 def create_formatted_df(sensors,features_near_sensors,feature_subtypes_near_sensors, public_holidays, weather, use_subtypes = False):
     # Create month as number not string
@@ -141,5 +211,8 @@ def create_formatted_df(sensors,features_near_sensors,feature_subtypes_near_sens
     
     # Drop unneeded columns
     sensors_with_features=sensors_with_features.drop(['Latitude', 'Longitude', 'location', 'datetime','mdate'], axis=1)
-
+    
+    # Replace NaNs with 0s
+    sensors_with_features= sensors_with_features.fillna(0)
+    
     return sensors_with_features

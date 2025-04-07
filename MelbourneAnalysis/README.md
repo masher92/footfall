@@ -4,6 +4,12 @@ This repository contains code for building a machine learning model to predict f
 The aim is to be able to predict footfall at any location in the city, for a particular time or day.  
 Sensors across the city record hourly counts of pedestrians, and we use this data combined with other descriptors of the built environment likely to drive footfall patterns.  
 
+
+## Changelog / History
+
+ - [`v2-epb-submitted1`](https://github.com/nickmalleson/footfall/releases/tag/v2-epb-submitted1) - Version of the code used for the Environment & Planing B paper submission.
+ - `v2-epb-submitted2` - Revised version (currently under development so no tag) to address reviewer comments. Largest change is incorporating additonal data (longer time period and new socio-economic data)
+
 ## Table of Contents
 * [Downloading data](#downloading-data)
 * [1. Preparing data](#preparing-data)
@@ -13,8 +19,13 @@ Sensors across the city record hourly counts of pedestrians, and we use this dat
 <a name="downloading-data"></a>
 ## Downloading data
 
-Footfall data is downloaded by selecting 'Export --> CSV' from: 
-* https://data.melbourne.vic.gov.au/Transport/Pedestrian-Counting-System-Monthly-counts-per-hour/b2ak-trbp 
+Footfall data is downloaded by selecting 'Export --> CSV': 
+* ~~https://data.melbourne.vic.gov.au/Transport/Pedestrian-Counting-System-Monthly-counts-per-hour/b2ak-trbp~~ (original file location, now changed)
+* This site has a summary of the data available: https://data.melbourne.vic.gov.au/explore/dataset/pedestrian-counting-system-monthly-counts-per-hour/information
+* The original file that we used (before revising the work to include more up to date data) is still available here: https://data.melbourne.vic.gov.au/api/datasets/1.0/pedestrian-counting-system-monthly-counts-per-hour/attachments/pedestrian_counting_system_monthly_counts_per_hour_may_2009_to_14_dec_2022_csv_zip/ 
+* More recent data are also available, called 'pedestrian-counting-system-monthly-counts-per-hour.csv'
+* We use both the 'original' and the new one
+* The sensor locations are available from [here](https://melbournetestbed.opendatasoft.com/explore/dataset/pedestrian-counting-system-sensor-locations/export/) (again export -> csv).
 
 Weather data is downloaded from: https://www.timeanddate.com/weather/australia/melbourne/historic. 
 
@@ -65,7 +76,10 @@ This is for calculating the betweenness of the street network.
 Script which scrapes the weather data from the Melbourne historic weather website, cleans the data, and saves yearly weather csvs to the Cleaned_data directory:
 * ScrapingWeatherData.ipynb
 
-### <ins> 5. PrepareDataForModelling </ins> 
+### <ins> 5. ProcessCensusData </ins> 
+Load the raw Australian census data files and create a clean file that has, for each of the three census years (2011, 2016, 2021), the values of some census data for each SA1 region.
+
+### <ins> 6. PrepareDataForModelling </ins> 
 Join cleaned datasets together to get footfall data alongside the predictor variables.  
 Add dummy variables for day of week and month AND a sin/cos representation of each as cyclical
 
@@ -86,7 +100,8 @@ Tests the performance of a number of different machine learning models using 10-
 The outputs of the 10-fold cross validation process are:
 * The error metric scores associated with that model (averaged over all folds)
     * The MAE, the MAPE and the RMSE
-### <b> Conclusion: Random Forest Regressor is best performing model </b>
+
+<b> Conclusion: Random Forest Regressor is best performing model </b>
 
 There was another version of this script where Year was not included as a variable (this is now deleted as decided it shouldn't be included)
 
@@ -96,7 +111,8 @@ Tests the performance of a random forest regressor using features collected with
 The outputs of the 10-fold cross validation process are:
 * The error metric scores associated with that model (averaged over all folds)
     * The MAE, the MAPE and the RMSE
-### <b> Conclusion: 500m buffer results in best performing model </b>
+
+<b> Conclusion: 400-500m buffer results in best performing model </b>
 
 ###  <ins> 3. ModelEvaluation.ipynb  </ins>
 Tests the performance of a random forest regressor using features collected within 500m.
@@ -118,4 +134,14 @@ Fit a Random Forest Regressor with a 500m buffer on the whole dataset. Saves thi
 Reads in the Random Forest model fitted on the whole dataset from the pickle file. 
 Find the Gini and Permutation feature importances returned from this final fitted model.  
 There are no predicted values to plot, because we fitted the model on the whole dataset.
+
+###  <ins> 6. UsingModelToEvaluateEvents.ipynb  </ins>
+
+Evalues the model on a few key events to see how well it is able to quantify the change in footfall that
+would have otherwise been predicted on those days.
+
+###  <ins> 7(a/b). TestingFinalModel.ipynb  </ins>
+
+Two scripts that look at how well the model peforms on a single post-covid dataset (a) and 
+how well it performs on a few different post-covid time periods.
 

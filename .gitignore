@@ -1,32 +1,43 @@
-
+# Ignore all data in the Data folder
 MelbourneAnalysis/Data/*
-=======
-*.dat
-results/	results/
-!**/__pycache__/
+
+# Ignore all results and output folders
+results/
 Outputs/
+
+# Ignore __pycache__ but keep ones in subdirectories (if needed)
 __pycache__
-Regridding/ReadMe.pdf
+
+# Ignore specific files
+Regridding/
+*.dat
 *.pdf
 *desktop.ini
 /Notes/*
 *.xlsx
 *.csv
-*.ipynb_checkpoints*
-.ipynb_checkpoints
-**/*.ipynb_checkpoints/
-**/**/*.ipynb_checkpoints/
+*.PickleFiles/
+**/*.PickleFiles/
+**/*.fit.sav
+*.pkl
 
-# Mac crap
+# R and stgm stuff
+.Rproj.user
+.Rhistory
+rosm.cache/
+stgam_files
+
+# Ignore .ipynb_checkpoints in all subdirectories
+.ipynb_checkpoints
+.virtual_documents
+
+# Mac system files
 .DS_Store
 
 # Vim swap files
 *.swp
 
-.*  # ignore all hidden files and folders
-!/.gitignore  # explicitly do not ignore .gitignore
-
-*.PickleFiles/
-**/*.PickleFiles/
-**/*.fit.sav
-*.pkl
+# Specific files added by Nick
+MelbourneAnalysis/Street_Network/Pedestrian_network.json
+MelbourneAnalysis/Street_Network/Property_centroid.json
+MelbourneAnalysis/1. PreparingData/6. PrepareDataForModelling/census_variable_tuples.pkl

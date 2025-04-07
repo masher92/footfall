@@ -1,0 +1,334 @@
+# ST-GAM application to footfall data
+
+## Libraries 
+
+```{r message=FALSE}
+library(archive)
+library(readr)
+library(ggspatial)
+library(remotes)
+library(cols4all)   # for nice shading in graphs and maps
+library(cowplot)    # for managing plots
+library(dplyr)      # for data manipulation 
+library(ggplot2)    # for plotting and mapping
+library(glue)       # for model construction 
+library(mgcv)       # for GAMs
+library(sf)         # for spatial data
+library(doParallel) # for parallelising operations
+library(purrr)      # for model construction
+library(tidyr)      # for model construction 
+library(lubridate)  # for date manipulation
+library(tidyverse)
+library(cols4all)
+
+# Install stgam to do the spatially & temporarlly varying coefficient models
+#remotes::install_github("lexcomber/stgam", build_vignettes = TRUE, force = TRUE)
+library(stgam)
+# vignette("space-time-gam-intro", package = "stgam")
+# vignette("space-time-gam-model-probs-BMA", package = "stgam")
+```
+
+## Read data 
+
+Read the footfall data. These are hourly counts of footfall from ~90 sensors across Melbourne over ~10 years (some for longer than others). Molly also attached a large number of contextual variables related to the weather and the built environment.
+
+```{r readData}
+# Read the data (a csv file within a tar.gz file)
+tar_gz_file <- "../Cleaned_data/FormattedDataForModelling.tgz"
+csv_file_name <- "FormattedDataForModelling/formatted_data_for_modelling_allsensors_400_outlierremovaleachsensor.csv"
+footfall <- archive_read(tar_gz_file, csv_file_name) |>
+  readr::read_csv()
+
+# Replace spaces and minus signs in column names with underscores
+colnames(footfall) <- gsub("[- ]", "_", colnames(footfall))
+
+print(head(footfall))
+
+# Read the sensor locations (we need to attach the lat/lon columns)
+sensor_locs_sf <- st_as_sf(read_csv("melbourne_locations.csv"), 
+                           coords = c("Longitude", "Latitude"), crs = 4326)
+# We need x and y columns later
+coords <- st_coordinates(sensor_locs_sf) |> as.data.frame()
+sensor_locs_sf$X <- coords$X
+sensor_locs_sf$Y <- coords$Y
+
+# Map them to check
+#ggplot() +
+#  annotation_map_tile(type = "cartolight", zoom = 12) +
+#  geom_sf(data = sensor_locs_sf, color = "red", size = 3) +
+#  labs(title = "Sensor locations in Melbourne") +
+#  theme_bw() +
+#  ylab("") +
+#  xlab("")
+
+# Attach the sensor locations (which have a geometry) and convert to sf
+footfall <- footfall |>
+  dplyr::left_join(sensor_locs_sf, by = c("sensor_id" = "sensor_id"))
+footfall <- st_as_sf(footfall)
+```
+
+Map a random sample of the sensors to check
+
+```{r }
+ggplot() +
+  annotation_map_tile(type = "cartolight", zoom = 12) +
+  geom_sf(data = footfall[sample(1:nrow(footfall), 5000),], aes(color = hourly_counts), size = 3) +
+  labs(title = "Random sample of sensors in Melbourne") +
+  theme_bw()
+```
+
+## Investigate the relationship between footfall and some of the spatial variables
+
+Define the explanatory variables that we want to look at. There are loads, these will do for now.
+
+```{r }
+vars_spatial <- c("landmarks_Mixed_Use", "betweenness", "buildings_Education", "distance_from_centre", "big_car_parks")
+vars_spatial[!vars_spatial %in% colnames(footfall)] # Check these vars are columns in footfall
+```
+
+Choose a particular time point (we'll worry about time later). (_Note: used Tuesday 5th and Saturday 9th February 2019 in the PCA paper_), Then filter on that time point
+
+```{r }
+time_point <- ymd_hms("2019-02-05 14:00:00")
+# Filter the footfall data to this time point
+foot_spatial <- footfall |>
+  dplyr::filter(footfall$datetime == time_point) |>
+  dplyr::select(sensor_id, datetime, hourly_counts, X, Y, geometry, all_of(vars_spatial))
+
+ggplot() +
+  annotation_map_tile(type = "cartolight", zoom = 12) +
+  geom_sf(data = foot_spatial, aes(color = hourly_counts), size = 3) +
+  labs(title = "Hourly counts of selected time") +
+  theme_bw()
+```
+
+Run a simple SVC, using the vignette for stgam (`vignette("space-time-gam-intro", package = "stgam")`)
+
+```{r }
+
+# define intercept term
+foot_spatial <- foot_spatial |> mutate(Intercept = 1)
+
+# Build up the formula dynamically based on the variables defined earlier
+base_formula <- as.formula("hourly_counts ~ 0 + Intercept + s(X, Y, bs = 'gp', by = Intercept)")
+for (var in vars_spatial) {
+  term <- as.formula(paste("~ . +", var, "+ s(X, Y, bs = 'gp', by =", var, ")"))
+  base_formula <- update(base_formula, term)
+}
+print(base_formula)
+
+# Fit the GAM model using the dynamically constructed formula
+svc.gam <- gam(base_formula, data = foot_spatial)
+```
+
+Checks
+
+```{r }
+gam.check(svc.gam)
+```
+
+```{r}
+summary(svc.gam)
+```
+
+Extract coefficient estimates
+
+```{r }
+vars_spatial <- c("Intercept", vars_spatial) # (will want to analyse the intercept too)
+res <-  calculate_vcs(model = svc.gam, 
+                      terms = vars_spatial, 
+                      data = foot_spatial)
+summary(res[, paste0("b_",vars_spatial)],)
+```
+
+Map the coefficients
+
+```{r }
+# Need a list of beta variables
+b_vars_spatial <- sapply(vars_spatial, function(x) paste0("b_", x)) |> unname()
+
+# join the data 
+map_results <-
+  foot_spatial |> left_join(st_set_geometry(res, NULL) |> select(sensor_id, all_of(b_vars_spatial)),
+                    by = "sensor_id")
+
+# Create an empty list to store the plots
+plots <- list()
+
+# Loop over the variables and create plots dynamically
+for (i in seq_along(b_vars_spatial)) {
+  var <- b_vars_spatial[i]
+  tit <- as.expression(bquote(beta[.(i-1)]))
+  
+  p <- ggplot(data = map_results, aes_string(color = var)) + 
+    geom_sf() + 
+    ggtitle(var) +
+    theme_minimal()
+  
+  plots[[i]] <- p
+}
+
+# Combine the plots into a single plot grid
+combined_plot <- plot_grid(plotlist = plots, ncol = 2)
+
+# Print the combined plot
+print(combined_plot)
+```
+
+Map them again, but this time with a hexagon grid (_I prefer the points maps so 
+not running the following_)
+
+```{r eval=False}
+# make surface
+hgrid <- st_make_grid(foot_spatial, square=FALSE,n=50) |>
+  st_sf() |> mutate(id=glue::glue('Hex{sprintf("%03i",row_number())}'))
+#hgrid <- hgrid[foot_spatial,]
+
+hgrid <- hgrid %>%
+  st_centroid() %>%
+  st_coordinates() %>%
+  {./1000} %>%
+  as_tibble() %>%
+  bind_cols(hgrid,.) %>%
+  select(X,Y,id)
+
+# Predict coefficient estimates over the surface for each variable dynamically
+for (i in seq_along(vars_spatial)) {
+  var <- vars_spatial[i]
+  b_var <- b_vars_spatial[i]
+  
+  # Create the prediction dynamically for the current variable
+  hgrid <- hgrid %>%
+    mutate(!!b_var := predict(
+      svc.gam, newdata = mutate(
+        hgrid, !!!setNames(rep(0, length(vars_spatial)), vars_spatial), !!var := 1)))
+}
+
+# Create an empty list to store the plots
+plots <- list()
+
+# Loop over the variables to create plots dynamically
+for (i in seq_along(b_vars_spatial)) {
+  b_var <- b_vars_spatial[i]
+  tit <- as.expression(bquote(beta[.(vars_spatial[i])]))
+
+  p <- ggplot(hgrid, aes_string(fill = b_var)) + 
+    geom_sf() + 
+    coord_sf() + # To improve the aspect ratio?
+    ggtitle(tit) +
+    theme_minimal()
+  
+  plots[[i]] <- p
+}
+
+# Combine the plots into a single plot grid
+combined_plot <- plot_grid(plotlist = plots, ncol = 2)
+
+# Print the combined plot
+print(combined_plot)
+```
+
+
+Extra stuff I've not thought about yet.
+
+```{r extras, eval=F}
+
+
+# Use stgam to create multiple models with different forms
+svc_gam_multi =
+  evaluate_models(data = foot_spatial, 
+                  target_var = "hourly_counts", 
+                  covariates = vars_spatial,
+                  coords_x = "X",
+                  coords_y = "Y",
+                  STVC = FALSE)
+# examine
+head(svc_gam_multi)
+# calculate the probabilities for each model 
+mod_comp_svc <- gam_model_probs(svc_gam_multi, n = 10)
+# have a look
+mod_comp_svc|> select(-f)
+```
+
+## Temporally-varying coefficient model (TVC)
+
+Lets run a spatio-tempodal GAM (ST-GAM) to see how time impacts the coefficients.
+
+I don't think it makes sense to specify the same model as the SVC because in 
+that model the coefficients do not vary across time. So here we choose 
+only temporally varying coefficients (time- and weather-related variables).
+
+For now we will also just use 2019.
+
+```{r}
+#vars_temporal <- c("year", "Sin_time", "Cos_time", "Sin_month_num", "Cos_month_num", 
+#                   "Sin_weekday_num", "Cos_weekday_num", "Temp", "Rain", "WindSpeed")
+vars_temporal <- c("Temp", "Rain", "WindSpeed")
+# Filter the footfall data to 2019
+foot_temporal <- footfall |>
+  dplyr::filter(year(footfall$datetime) == 2019) |>
+  dplyr::select(sensor_id, datetime, hourly_counts, X, Y, geometry, 
+                Sin_time, Cos_time, Sin_month_num, Cos_month_num, Sin_weekday_num, Cos_weekday_num,
+                all_of(vars_temporal))
+```
+
+Plot the hourly counts across the year using a different colored line for each 
+sensor_id
+
+```{r}
+
+# Filter a few of the sensor_ids or the graph is too busy
+sample_sensor_id <- (foot_temporal[,'sensor_id'] |> unique() |> sample_n(10) )$sensor_id
+
+ggplot(
+    foot_temporal |>
+      filter(month(datetime) == 5) |>  # Just May for now
+      filter(sensor_id %in% sample_sensor_id),
+    aes(x = datetime, y = hourly_counts, color = as.factor(sensor_id))
+    ) +
+  geom_line() +
+  scale_color_viridis_d() +
+  theme_minimal()
+```
+
+Fit the TVC model using the same dynamic approach to creating the formula
+as above. Also just fit it on a single location.
+
+```{r }
+# define intercept term
+foot_temporal <- foot_temporal |> mutate(Intercept = 1)
+
+# Build up the formula dynamically based on the variables defined earlier
+base_formula <- as.formula("hourly_counts ~ 0 + Intercept + s(Sin_time, bs = 'gp', by = Intercept)")
+for (var in vars_temporal) {
+  term <- as.formula(paste("~ . +", var, "+ s(Sin_time, bs = 'gp', by =", var, ")"))
+  base_formula <- update(base_formula, term)
+}
+print(base_formula)
+
+# Fit the GAM model using the dynamically constructed formula
+tvc.gam <- gam(base_formula, data = foot_temporal[foot_temporal$sensor_id==19,])
+
+# Temporarily manually create the formula
+#tvc.gam = gam(hourly_counts ~ 0 +
+#                Intercept + s(Sin_time, bs = 'gp', by = Intercept) + 
+#                Temp + s(Sin_time, bs = "gp", by = Temp) + 
+#                Rain  + s(Sin_time, bs = "gp", by = Rain), 
+#              data = foot_temporal)
+```
+
+Checks
+
+```{r }
+gam.check(tvc.gam)
+```
+
+```{r}
+summary(tvc.gam)
+```
+
+[ ] Think about how to capture time properly. Need multiple variables? (Sin_time and Cos_time, or hour, month,week, etc. ). 
+
+## Spatio-temporally-varying coefficient model 
+
+[ ] TODO

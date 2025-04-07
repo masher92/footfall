@@ -27,15 +27,15 @@ def prepare_x_y_data(input_csv):
     # Read in formatted data
     data = pd.read_csv(input_csv, index_col = False)
     data = data.fillna(0)
+
+    # Drop unneeded (mostly string) columns
+    data = drop_unneeded_columns(data)
     
-    ### Delete unneeded columns - we currently include data from all sensors (even incomplete ones)
-    sensor_ids = data['sensor_id']
-    data = data.drop(['sensor_id'],axis=1) # don't want this included
     # Get rid of columns in which none of the sensors have a value
     for column in data.columns:
         if np.nanmax(data[column]) ==0:
             del data[column]
-            
+
     # Filter columns using the regex pattern in function input
     regex_pattern = 'buildings$|street_inf$|landmarks$'
     data = data[data.columns.drop(list(data.filter(regex=regex_pattern)))].copy()
@@ -44,7 +44,10 @@ def prepare_x_y_data(input_csv):
     rng = np.random.RandomState(seed=42)
     data['random'] = np.random.random(size=len(data))
     data["random_cat"] = rng.randint(3, size=data.shape[0])
-    
+
+    # We need the index of the last row for 2019 (need this later)
+    index_2019 = data.index[pd.to_datetime(data['datetime']) >= '2020-01-01'][0]
+
     ## Prepare data for modelling 
     ### Split into predictor/predictand variables
     Xfull = data.drop(['hourly_counts'], axis =1)
@@ -53,7 +56,8 @@ def prepare_x_y_data(input_csv):
     ### Store the (non Sin/Cos) time columns and then remove them (Need them later to segment the results by hour of the day)
     data_time_columns = Xfull[['day_of_month_num', 'time', 'weekday_num', 'time_of_day', 'datetime']]
     Xfull = Xfull.drop(['day_of_month_num', 'time', 'weekday_num', 'time_of_day','datetime', 'month_num'],axis=1)
-    return Xfull, Yfull, data_time_columns
+
+    return Xfull, Yfull, data_time_columns, index_2019
 
 
 # Code from: https://stackoverflow.com/questions/20105364/how-can-i-make-a-scatter-plot-colored-by-density-in-matplotlib/53865762#53865762
@@ -214,6 +218,9 @@ def remove_outliers(sensors):
     join = pd.concat([sensors, no_outliers], axis = 1)
     join = pd.DataFrame(join, columns = ['datetime', 'sensor_id','outlier', 'hourly_counts'])
 
+    # Count the total outlier footfall (a reviewer wanted this)
+    total_outlier_footfall = join[join['outlier'] == True]['hourly_counts'].sum()
+
     # Choose just the outliers
     outliers = join[join['outlier'] == True]
     outliers_list = list(outliers['datetime']) # A list of the days that are outliers
@@ -228,7 +235,7 @@ def remove_outliers(sensors):
     #print(f"I found {len(outliers_list)} outliers from {len(join)} days in total. Removing them leaves us with {len(sensors_without_outliers)} events")
     #print(f"{round(len(outliers_list)/len(join) *100,1)}% outliers removed")
     pct = round(len(outliers_list)/len(join) *100,1)     
-    return sensors_without_outliers, outliers, pct
+    return sensors_without_outliers, outliers, pct, total_outlier_footfall
 
 def convert_df_variables_to_dummy(df, variables):
     for variable in variables:
@@ -553,3 +560,20 @@ def find_sensorly_errors_on_date(special_dates_data, special_date, melbourne_sen
     linear.add_to(melbourne_map)    
         
     #display(melbourne_map)
+
+def drop_unneeded_columns(data):
+    """
+    Drop columns that are not needed for modelling
+    :param data: A dataframe containing sensors hourly counts
+    :return: The dataframe without the unneeded columns
+    """
+    return data.drop([
+        'sensor_id', 'sensor_name', 'Name', 'installation_date', 'status', 'note', 'Note', 'Location_Type', 'Status'
+    ], axis=1) # don't want this included
+
+def buffer_sizes():
+    """
+    Get the buffer sizes we want to experiment with (so that this isn't hard coded all over the place)
+    :return:
+    """
+    return [50, 100, 200, 400, 500, 600, 1000]
